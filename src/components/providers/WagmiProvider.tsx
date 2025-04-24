@@ -10,6 +10,11 @@ export const config = createConfig(
     appName: PROJECT_TITLE,
     chains: [base, degen, mainnet, optimism],
     additionalConnectors: [farcasterFrame(), injected()],
+    transports: {
+      [base.id]: http(
+        `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`,
+      ),
+    },
   }),
 );
 
