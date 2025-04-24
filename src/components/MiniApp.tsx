@@ -15,6 +15,24 @@ export default function MiniApp() {
   }
 
   const presetAmounts = ["10", "50", "100"];
+  const amtNum = parseFloat(amount) || 0;
+  const sponsorshipOptions = [
+    { amount: 1, label: "Eternal gratitude" },
+    { amount: 20, label: "Hugs" },
+    { amount: 30, label: "vibes.engineering early access" },
+    { amount: 69, label: "thanks I guess? 👉 👈" },
+    { amount: 100, label: "Premium emoji support" },
+    { amount: 250, label: "Exclusive digital postcard" },
+    { amount: 420, label: "✨" },
+    { amount: 500, label: "I will wear a t-shirt for two days" },
+    { amount: 750, label: "a sponsored vlog for your brand / memecoin" },
+    { amount: 1000, label: "I will build a miniapp for you" },
+    { amount: 2000, label: "Brand ambassador for a week" },
+  ];
+  const currentIndex = sponsorshipOptions.reduce(
+    (acc, opt, idx) => (amtNum >= opt.amount ? idx : acc),
+    -1
+  );
 
   return (
     <>
@@ -63,18 +81,26 @@ export default function MiniApp() {
       </div>
       <div className="space-y-4 text-left mt-4">
         <h2 className="text-xl font-semibold">Sponsorship Options</h2>
-        <ul className="list-disc list-inside space-y-1">
-          <li><span className="font-semibold">$1:</span> Eternal gratitude</li>
-          <li><span className="font-semibold">$20:</span> Hugs</li>
-          <li><span className="font-semibold">$30:</span> vibes.engineering early access</li>
-          <li><span className="font-semibold">$69:</span> thanks I guess? 👉 👈</li>
-          <li><span className="font-semibold">$100:</span> Premium emoji support</li>
-          <li><span className="font-semibold">$250:</span> Exclusive digital postcard</li>
-          <li><span className="font-semibold">$420:</span> ✨</li>
-          <li><span className="font-semibold">$500:</span> I will wear a t-shirt for two days</li>
-          <li><span className="font-semibold">$750:</span> a sponsored vlog for your brand / memecoin</li>
-          <li><span className="font-semibold">$1000:</span> I will build a miniapp for you</li>
-          <li><span className="font-semibold">$2000:</span> Brand ambassador for a week</li>
+        <ul className="list-none space-y-1">
+          {sponsorshipOptions.map((option, idx) => {
+            const unlocked = idx <= currentIndex;
+            const isCurrent = idx === currentIndex;
+            return (
+              <li
+                key={option.amount}
+                className={`flex justify-between px-4 py-2 rounded transition-colors ${
+                  isCurrent
+                    ? "bg-pink-500 text-white font-bold"
+                    : unlocked
+                    ? "text-white"
+                    : "text-gray-400 opacity-50"
+                }`}
+              >
+                <span className="font-semibold">${option.amount}:</span>
+                <span>{option.label}</span>
+              </li>
+            );
+          })}
         </ul>
         <p className="mt-2 font-semibold">Total fundraising goal: $2000</p>
       </div>
