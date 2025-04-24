@@ -39,7 +39,7 @@ export default function MiniApp() {
   const presetAmounts = ["10", "50", "200"];
   const amtNum = parseFloat(amount) || 0;
   const sponsorshipOptions = [
-    { amount: 1, label: "endless gratitude" },
+    { amount: 5, label: "endless gratitude" },
     { amount: 20, label: "Hugs and I'll add your pfp to this mini app" },
     { amount: 30, label: "vibes.engineering early access NFT" },
     { amount: 69, label: "thanks I guess? 👉 👈" },
