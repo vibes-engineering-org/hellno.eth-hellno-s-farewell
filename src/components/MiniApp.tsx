@@ -15,7 +15,7 @@ export default function MiniApp() {
   const { isSDKLoaded } = useFrameSDK();
   const [amount, setAmount] = useState("42.069");
   const { address } = useAccount();
-  const { data, status, isSuccess } = useReadContract({
+  const { data, status, isSuccess, error } = useReadContract({
     address: getAddress(baseUSDC.token),
     abi: [
       {
@@ -29,7 +29,7 @@ export default function MiniApp() {
     functionName: "balanceOf",
     args: [toAddress!],
   });
-  console.log('data', data, 'status', status);
+  console.log('data', data, 'status', status, 'error', error);
   const balance = isSuccess ? Number(data) / 1e6 : 0;
   const progress = Math.min((balance / 2000) * 100, 100);
 
