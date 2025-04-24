@@ -25,7 +25,7 @@ function ShareButton({
 }: ShareButtonProps) {
   const { sdk } = useFrameSDK();
 
-  const text = `Check out the mini app "${projectName}" I built with @vibesengineering.eth`;
+  const text = `I just donated to hellno's trip to Farcon this year 🥳`;
   const shareUrl = useMemo(() => {
     if (!frontendUrl) return null;
 
