@@ -68,7 +68,8 @@ export default function MiniApp() {
       <span style={{ position: "absolute", bottom: "2rem", left: "-2rem", animation: "moveLR 6s linear infinite" }} className="text-2xl">💜</span>
       <h1 className="text-4xl font-extrabold mb-4">Help Hellno fly to Farcon ✈️</h1>
       <div className="mb-4">
-        <p className="text-lg font-medium">Your USDC Balance: ${balance.toFixed(2)}</p>
+        <p className="text-lg font-medium">Goal: $2000 - {(100 * balance / 2000 ).toFixed(2)}% funded</p>
+        <p className="text-lg font-medium">3 days remaining</p>
         <Progress value={progress} className="w-full mt-1" />
       </div>
       <div className="mb-6">
