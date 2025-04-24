@@ -5,11 +5,32 @@ import { useFrameSDK } from "~/hooks/useFrameSDK";
 import { DaimoPayButton } from "@daimo/pay";
 import { baseUSDC } from "@daimo/contract";
 import { getAddress } from "viem";
+import { useAccount, useContractRead } from "wagmi";
+import { Progress } from "~/components/ui/progress";
 import { Button } from "~/components/ui/button";
 
 export default function MiniApp() {
   const { isSDKLoaded } = useFrameSDK();
   const [amount, setAmount] = useState("42.069");
+  const { address } = useAccount();
+  const { data: balanceRaw } = useContractRead({
+    address: getAddress(baseUSDC.token),
+    abi: [
+      {
+        name: "balanceOf",
+        type: "function",
+        stateMutability: "view",
+        inputs: [{ type: "address", name: "owner" }],
+        outputs: [{ type: "uint256", name: "" }],
+      },
+    ] as const,
+    functionName: "balanceOf",
+    args: [address!],
+    watch: true,
+    enabled: !!address,
+  });
+  const balance = balanceRaw ? Number(balanceRaw) / 1e6 : 0;
+  const progress = Math.min((balance / 2000) * 100, 100);
 
   if (!isSDKLoaded) {
     return <div>Loading...</div>;
@@ -47,6 +68,10 @@ export default function MiniApp() {
       <span style={{ position: "absolute", bottom: "1rem", left: "-3rem", animation: "moveLR 12s linear infinite" }} className="text-2xl">🌌</span>
       <span style={{ position: "absolute", bottom: "2rem", left: "-2rem", animation: "moveLR 6s linear infinite" }} className="text-2xl">💜</span>
       <h1 className="text-4xl font-extrabold mb-4">Help Hellno fly to Farcon ✈️</h1>
+      <div className="mb-4">
+        <p className="text-lg font-medium">Your USDC Balance: ${balance.toFixed(2)}</p>
+        <Progress value={progress} className="w-full mt-1" />
+      </div>
       <div className="mb-6">
         <input
           type="number"
