@@ -5,7 +5,7 @@ import { useFrameSDK } from "~/hooks/useFrameSDK";
 import { DaimoPayButton } from "@daimo/pay";
 import { baseUSDC } from "@daimo/contract";
 import { getAddress } from "viem";
-import { Button } from "~/components/ui/buttonellno's Europoor to N";
+import { Button } from "~/components/ui/button";
 
 export default function MiniApp() {
   const { isSDKLoaded } = useFrameSDK();
