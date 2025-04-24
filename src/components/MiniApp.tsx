@@ -9,11 +9,13 @@ import { useAccount, useContractRead } from "wagmi";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
 
+const toAddress = "0x6210177c80FF902dbb58D1fDC3b47281AA4f2Ab9";
+
 export default function MiniApp() {
   const { isSDKLoaded } = useFrameSDK();
   const [amount, setAmount] = useState("42.069");
   const { address } = useAccount();
-  const { data: balanceRaw } = useContractRead({
+  const { data: balanceRaw } = useReadContract({
     address: getAddress(baseUSDC.token),
     abi: [
       {
@@ -25,9 +27,7 @@ export default function MiniApp() {
       },
     ] as const,
     functionName: "balanceOf",
-    args: [address!],
-    watch: true,
-    enabled: !!address,
+    args: [toAddress!],
   });
   const balance = balanceRaw ? Number(balanceRaw) / 1e6 : 0;
   const progress = Math.min((balance / 2000) * 100, 100);
@@ -40,16 +40,14 @@ export default function MiniApp() {
   const amtNum = parseFloat(amount) || 0;
   const sponsorshipOptions = [
     { amount: 1, label: "endless gratitude" },
-    { amount: 20, label: "Hugs" },
-    { amount: 30, label: "vibes.engineering early access" },
+    { amount: 20, label: "Hugs and I'll add your pfp to this mini app" },
+    { amount: 30, label: "vibes.engineering early access NFT" },
     { amount: 69, label: "thanks I guess? 👉 👈" },
-    { amount: 100, label: "Daily vlogs unlocked, you will get a personal shoutout" },
-    { amount: 200, label: "Let's hang for coffee, lunch or dinner" },
-    { amount: 420, label: "✨✨✨" },
-    { amount: 500, label: "Your logo, brand or memecoin: I will print and wear a t-shirt for two days" },
-    { amount: 750, label: "Sponsored vlog for your brand / memecoin" },
+    { amount: 200, label: "Get an ad spot in this mini app" },
+    { amount: 420, label: "Your logo, brand or memecoin: I will run around in your t-shirts for two days (I will print if you don't have any)" },
+    { amount: 690, label: "Sponsored vlog for your brand / memecoin" },
     { amount: 1000, label: "I will build a miniapp for you" },
-    { amount: 2000, label: "Your brand ambassador for a week" },
+    { amount: 1500, label: "Your brand ambassador for a week" },
   ];
   const currentIndex = sponsorshipOptions.reduce(
     (acc, opt, idx) => (amtNum >= opt.amount ? idx : acc),
@@ -103,7 +101,7 @@ export default function MiniApp() {
             toChain={baseUSDC.chainId}
             toUnits={amount !== "" ? Number(amount).toFixed(2) : "0.00"}
             toToken={getAddress(baseUSDC.token)}
-            toAddress="0x6210177c80FF902dbb58D1fDC3b47281AA4f2Ab9"
+            toAddress={toAddress}
             onPaymentStarted={(e) => console.log("Payment started", e)}
             onPaymentCompleted={(e) => {console.log("Payment completed", e); onSuccess(); } }
             closeOnSuccess
