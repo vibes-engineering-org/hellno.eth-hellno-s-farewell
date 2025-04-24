@@ -1,2 +1,3 @@
-export const PROJECT_TITLE = "Help Hellno Fly to Farcon";
-export const PROJECT_DESCRIPTION = "Support Hellno's trip to FarCon by donating USDC";
+export const PROJECT_ID = "hellno's fundraise";
+export const PROJECT_TITLE = "hellno's fundraise";
+export const PROJECT_DESCRIPTION = "Fundraising to support Hellno's trip to FarCon";
