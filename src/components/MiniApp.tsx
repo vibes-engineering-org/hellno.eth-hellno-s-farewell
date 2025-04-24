@@ -16,7 +16,7 @@ export default function MiniApp() {
   const [amount, setAmount] = useState("42.069");
   const { address } = useAccount();
   const { data, status, isSuccess, error } = useReadContract({
-    address: getAddress(baseUSDC.token),
+    address: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
     abi: [
       {
         name: "balanceOf",
