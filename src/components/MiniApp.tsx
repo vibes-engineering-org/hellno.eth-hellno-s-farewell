@@ -5,29 +5,30 @@ import { useFrameSDK } from "~/hooks/useFrameSDK";
 import { DaimoPayButton } from "@daimo/pay";
 import { baseUSDC } from "@daimo/contract";
 import { getAddress } from "viem";
+import { Button } from "~/components/ui/buttonellno's Europoor to N";
 
 export default function MiniApp() {
   const { isSDKLoaded } = useFrameSDK();
-  const [amount, setAmount] = useState("25.00");
+  const [amount, setAmount] = useState("42.069");
 
   if (!isSDKLoaded) {
     return <div>Loading...</div>;
   }
 
-  const presetAmounts = ["10", "50", "100"];
+  const presetAmounts = ["10", "50", "200"];
   const amtNum = parseFloat(amount) || 0;
   const sponsorshipOptions = [
-    { amount: 1, label: "Eternal gratitude" },
+    { amount: 1, label: "endless gratitude" },
     { amount: 20, label: "Hugs" },
     { amount: 30, label: "vibes.engineering early access" },
     { amount: 69, label: "thanks I guess? 👉 👈" },
-    { amount: 100, label: "Premium emoji support" },
-    { amount: 250, label: "Exclusive digital postcard" },
-    { amount: 420, label: "✨" },
-    { amount: 500, label: "I will wear a t-shirt for two days" },
-    { amount: 750, label: "a sponsored vlog for your brand / memecoin" },
+    { amount: 100, label: "Daily vlogs unlocked, you will get a personal shoutout" },
+    { amount: 200, label: "Let's hang for coffee, lunch or dinner" },
+    { amount: 420, label: "✨✨✨" },
+    { amount: 500, label: "Your logo, brand or memecoin: I will print and wear a t-shirt for two days" },
+    { amount: 750, label: "Sponsored vlog for your brand / memecoin" },
     { amount: 1000, label: "I will build a miniapp for you" },
-    { amount: 2000, label: "Brand ambassador for a week" },
+    { amount: 2000, label: "Your brand ambassador for a week" },
   ];
   const currentIndex = sponsorshipOptions.reduce(
     (acc, opt, idx) => (amtNum >= opt.amount ? idx : acc),
@@ -68,7 +69,7 @@ export default function MiniApp() {
           ))}
         </div>
         <div className="flex justify-center px-8 py-4 bg-pink-500 text-white text-xl font-bold rounded-lg shadow-lg hover:bg-pink-400 transition-colors">
-          <DaimoPayButton
+          <DaimoPayButton.Custom
             appId={process.env.NEXT_PUBLIC_DAIMO_PAY_KEY || "pay-demo"}
             toChain={baseUSDC.chainId}
             toUnits={amount !== "" ? Number(amount).toFixed(2) : "0.00"}
@@ -76,7 +77,15 @@ export default function MiniApp() {
             toAddress="0x6210177c80FF902dbb58D1fDC3b47281AA4f2Ab9"
             onPaymentStarted={(e) => console.log("Payment started", e)}
             onPaymentCompleted={(e) => console.log("Payment completed", e)}
-          />
+            closeOnSuccess
+          >
+            <Button
+              className="w-full"
+              size="lg"
+            >
+              Support hellno.eth
+            </Button>
+          </DaimoPayButton.Custom>
         </div>
       </div>
       <div className="space-y-4 text-left mt-4">
