@@ -5,7 +5,7 @@ import { useFrameSDK } from "../hooks/useFrameSDK";
 import { DaimoPayButton } from "@daimo/pay";
 import { baseUSDC } from "@daimo/contract";
 import { getAddress } from "viem";
-import { useAccount, useContractRead } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
 
