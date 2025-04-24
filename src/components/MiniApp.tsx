@@ -17,8 +17,12 @@ export default function MiniApp() {
   const presetAmounts = ["10", "50", "100"];
 
   return (
-    <div className="w-[400px] mx-auto py-4 px-4 space-y-4 text-center">
-      <h1 className="text-2xl font-bold">Help Hellno Fly to Farcon</h1>
+    <div className="relative w-[400px] mx-auto py-6 px-6 space-y-6 text-center bg-gradient-to-br from-purple-900 via-purple-700 to-pink-600 text-white rounded-xl shadow-lg overflow-hidden">
+      {/* background emojis */}
+      <span className="absolute top-2 left-4 animate-bounce text-3xl">🚀</span>
+      <span className="absolute bottom-4 right-6 animate-pulse text-2xl">🌌</span>
+      <span className="absolute bottom-8 left-8 animate-spin text-2xl">💜</span>
+      <h1 className="text-3xl font-extrabold">Help Hellno travel from Europoor to NYC ✈️</h1>
       <input
         type="number"
         min="0"
@@ -30,14 +34,14 @@ export default function MiniApp() {
             setAmount(val);
           }
         }}
-        className="w-full text-center text-3xl font-semibold border rounded-md border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full text-center text-3xl font-semibold bg-black bg-opacity-20 border border-purple-400 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
       />
       <div className="flex justify-center space-x-2">
         {presetAmounts.map((val) => (
           <button
             key={val}
             onClick={() => setAmount(`${val}.00`)}
-            className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-500 transition-colors"
           >
             ${val}
           </button>
