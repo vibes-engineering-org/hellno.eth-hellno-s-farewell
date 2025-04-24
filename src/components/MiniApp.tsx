@@ -89,6 +89,12 @@ export default function MiniApp() {
   const balance = isSuccess ? Number(data) / 1e6 : 0;
   const progress = Math.min((balance / 2000) * 100, 100);
 
+  const [completed, setCompleted] = useState(false);
+
+  const onSuccess = () => {
+    console.log('onSuccess');
+    setCompleted(true);
+  };
   if (!isSDKLoaded) {
     return <div>Loading...</div>;
   }
@@ -125,12 +131,6 @@ export default function MiniApp() {
     -1
   );
 
-  const [completed, setCompleted] = useState(false);
-
-  const onSuccess = () => {
-    console.log('onSuccess');
-    setCompleted(true);
-  };
 
   return (
     <>
