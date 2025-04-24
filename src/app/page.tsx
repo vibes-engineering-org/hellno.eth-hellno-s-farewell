@@ -10,7 +10,7 @@ const frame = {
   version: "next",
   imageUrl: `${appUrl}/opengraph-image`,
   button: {
-    title: "Launch Frame",
+    title: "help hellno.eth",
     action: {
       type: "launch_frame",
       name: PROJECT_TITLE,
