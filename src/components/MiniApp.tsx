@@ -142,7 +142,7 @@ export default function MiniApp() {
   const amtNum = parseFloat(amount) || 0;
   const sponsorshipOptions = [
     { amount: 5, label: "endless gratitude" },
-    { amount: 20, label: "Hugs and I'll show pfp here" },
+    { amount: 20, label: "Hugs and I'll show your pfp here" },
     { amount: 30, label: "vibes.engineering early access NFT" },
     { amount: 69, label: "thanks I guess? 👉 👈" },
     { amount: 200, label: "Get an ad spot in this mini app" },
@@ -151,7 +151,7 @@ export default function MiniApp() {
       label:
         "Your logo, brand or memecoin: I will run around in your t-shirts for two days (I will print if you don't have any)",
     },
-    { amount: 690, label: "Sponsored vlog for your brand / memecoin" },
+    { amount: 690, label: "Full 10min vlog for your brand / memecoin" },
     { amount: 1000, label: "I will build a miniapp for you" },
     { amount: 1500, label: "Your brand ambassador for a week" },
   ];
