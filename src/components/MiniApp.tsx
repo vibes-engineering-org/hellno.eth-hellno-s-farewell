@@ -119,7 +119,7 @@ export default function MiniApp() {
       </div>
       <div className="space-y-4 text-left mt-4">
         <h2 className="text-xl font-semibold">Sponsorship Options</h2>
-        <ul className="list-none space-y-1">
+        <ul className="text-left list-none space-y-1">
           {sponsorshipOptions.map((option, idx) => {
             const unlocked = idx <= currentIndex;
             const isCurrent = idx === currentIndex;
@@ -127,7 +127,7 @@ export default function MiniApp() {
               <li
                 key={option.amount}
                 onClick={() => setAmount(option.amount.toFixed(2))}
-                className={`cursor-pointer flex justify-between px-4 py-2 rounded transition-colors ${
+                className={`cursor-pointer flex text-left px-4 py-2 rounded transition-colors ${
                   isCurrent
                     ? "bg-pink-500 text-white font-bold"
                     : unlocked
