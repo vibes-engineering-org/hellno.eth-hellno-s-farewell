@@ -9,10 +9,7 @@ import { useAccount, useReadContract } from "wagmi";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
 import { PROJECT_TITLE } from "~/lib/constants";
-
-import { Button } from "~/components/ui/button";
 import { Share } from "lucide-react";
-import { useFrameSDK } from "~/hooks/useFrameSDK";
 import { useMemo } from "react";
 
 type ShareButtonProps = {
