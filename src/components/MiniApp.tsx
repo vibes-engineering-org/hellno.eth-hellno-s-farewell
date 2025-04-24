@@ -15,7 +15,7 @@ export default function MiniApp() {
   const { isSDKLoaded } = useFrameSDK();
   const [amount, setAmount] = useState("42.069");
   const { address } = useAccount();
-  const result = useReadContract({
+  const { data, status, isSuccess } = useReadContract({
     address: getAddress(baseUSDC.token),
     abi: [
       {
@@ -29,8 +29,8 @@ export default function MiniApp() {
     functionName: "balanceOf",
     args: [toAddress!],
   });
-  console.log('result', result);
-  const balance = result ? Number(result) / 1e6 : 0;
+  console.log('data', data, 'status', status);
+  const balance = isSuccess ? Number(data) / 1e6 : 0;
   const progress = Math.min((balance / 2000) * 100, 100);
 
   if (!isSDKLoaded) {
@@ -41,7 +41,7 @@ export default function MiniApp() {
   const amtNum = parseFloat(amount) || 0;
   const sponsorshipOptions = [
     { amount: 5, label: "endless gratitude" },
-    { amount: 20, label: "Hugs and I'll add your pfp to this mini app" },
+    { amount: 20, label: "Hugs and I'll show pfp here" },
     { amount: 30, label: "vibes.engineering early access NFT" },
     { amount: 69, label: "thanks I guess? 👉 👈" },
     { amount: 200, label: "Get an ad spot in this mini app" },
