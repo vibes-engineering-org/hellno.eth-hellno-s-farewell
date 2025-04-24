@@ -9,7 +9,64 @@ import { useAccount, useReadContract } from "wagmi";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
 import { PROJECT_TITLE } from "~/lib/constants";
-import { ShareButton } from "./ShareButton";
+
+import { Button } from "~/components/ui/button";
+import { Share } from "lucide-react";
+import { useFrameSDK } from "~/hooks/useFrameSDK";
+import { useMemo } from "react";
+
+type ShareButtonProps = {
+  projectName?: string;
+  frontendUrl?: string;
+  variant?: "primary" | "secondary" | "ghost" | "default";
+};
+
+function ShareButton({
+  projectName,
+  frontendUrl,
+  variant = "primary",
+}: ShareButtonProps) {
+  const { sdk } = useFrameSDK();
+
+  const text = `Check out the mini app "${projectName}" I built with @vibesengineering.eth`;
+  const shareUrl = useMemo(() => {
+    if (!frontendUrl) return null;
+
+    return `https://warpcast.com/~/compose?text=${encodeURIComponent(
+      text,
+    )}&embeds[]=${encodeURIComponent(frontendUrl)}`;
+  }, [text, frontendUrl]);
+
+  const onShare = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    const frameContext = await sdk.context;
+    if (frameContext && frontendUrl) {
+      e.preventDefault();
+      sdk.actions.composeCast({
+        text,
+        embeds: [frontendUrl],
+      });
+    } else if (shareUrl) {
+      window.open(shareUrl, "_blank");
+    }
+  };
+
+  if (!shareUrl) return null;
+
+  return (
+    <Button
+      variant={variant}
+      onClick={(e) => onShare(e)}
+      size="default"
+      className="shadow-none"
+    >
+      <Share className="h-4 w-4 md:h-5 md:w-5" />
+      Share
+    </Button>
+  );
+}
+
 
 const toAddress = "0x6210177c80FF902dbb58D1fDC3b47281AA4f2Ab9";
 
