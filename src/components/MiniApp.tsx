@@ -41,7 +41,7 @@ export default function MiniApp() {
 
   return (
     <>
-      <div className="relative w-[400px] mx-auto py-6 px-6 text-center bg-gradient-to-br from-purple-900 via-purple-700 to-pink-600 text-white rounded-xl shadow-lg overflow-hidden">
+      <div className="relative w-[400px] mx-auto py-6 px-6 text-left bg-gradient-to-br from-purple-800 via-purple-500 to-pink-400 text-white rounded-xl shadow-lg overflow-hidden">
       {/* background emojis */}
       <span style={{ position: "absolute", top: "0.5rem", left: "-2rem", animation: "moveLR 8s linear infinite" }} className="text-3xl">🚀</span>
       <span style={{ position: "absolute", bottom: "1rem", left: "-3rem", animation: "moveLR 12s linear infinite" }} className="text-2xl">🌌</span>
@@ -59,7 +59,7 @@ export default function MiniApp() {
               setAmount(val);
             }
           }}
-          className="w-full text-center text-5xl font-extrabold bg-black bg-opacity-20 border border-purple-400 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-4"
+          className="w-full text-left text-5xl font-extrabold bg-black bg-opacity-20 border border-purple-400 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-4"
         />
         <div className="flex justify-center space-x-2 mb-4">
           {presetAmounts.map((val) => (
@@ -72,7 +72,7 @@ export default function MiniApp() {
             </button>
           ))}
         </div>
-        <div className="flex justify-center px-8 py-4 bg-pink-500 text-white text-xl font-bold rounded-lg shadow-lg hover:bg-pink-400 transition-colors">
+        <div className="flex justify-center px-8 py-4 bg-pink-500 text-white text-xl font-bold rounded-lg shadow-lg hover:bg-pink-400 transition-colors animate-pulse">
           <DaimoPayButton.Custom
             appId={process.env.NEXT_PUBLIC_DAIMO_PAY_KEY || "pay-demo"}
             toChain={baseUSDC.chainId}
@@ -103,7 +103,8 @@ export default function MiniApp() {
             return (
               <li
                 key={option.amount}
-                className={`flex justify-between px-4 py-2 rounded transition-colors ${
+                onClick={() => setAmount(option.amount.toFixed(2))}
+                className={`cursor-pointer flex justify-between px-4 py-2 rounded transition-colors ${
                   isCurrent
                     ? "bg-pink-500 text-white font-bold"
                     : unlocked
