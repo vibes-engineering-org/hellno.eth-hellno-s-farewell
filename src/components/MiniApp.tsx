@@ -8,6 +8,8 @@ import { getAddress } from "viem";
 import { useAccount, useReadContract } from "wagmi";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
+import { PROJECT_TITLE } from "~/lib/constants";
+import { ShareButton } from "./ShareButton";
 
 const toAddress = "0x6210177c80FF902dbb58D1fDC3b47281AA4f2Ab9";
 
@@ -37,6 +39,20 @@ export default function MiniApp() {
     return <div>Loading...</div>;
   }
 
+  if (completed) {
+    return (
+      <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-75 text-center p-4 z-50">
+        <h1 className="text-5xl text-white font-extrabold mb-4">
+          🎉 Thank you for supporting {PROJECT_TITLE}! 🎉
+        </h1>
+        <ShareButton
+          projectName={PROJECT_TITLE}
+          frontendUrl={window.location.href}
+        />
+      </div>
+    );
+  }
+
   const presetAmounts = ["10", "50", "200"];
   const amtNum = parseFloat(amount) || 0;
   const sponsorshipOptions = [
@@ -55,8 +71,11 @@ export default function MiniApp() {
     -1
   );
 
+  const [completed, setCompleted] = useState(false);
+
   const onSuccess = () => {
     console.log('onSuccess');
+    setCompleted(true);
   };
 
   return (
