@@ -35,6 +35,10 @@ export default function MiniApp() {
     -1
   );
 
+  const onSuccess = () => {
+    console.log('onSuccess');
+  };
+
   return (
     <>
       <div className="relative w-[400px] mx-auto py-6 px-6 text-center bg-gradient-to-br from-purple-900 via-purple-700 to-pink-600 text-white rounded-xl shadow-lg overflow-hidden">
@@ -76,15 +80,17 @@ export default function MiniApp() {
             toToken={getAddress(baseUSDC.token)}
             toAddress="0x6210177c80FF902dbb58D1fDC3b47281AA4f2Ab9"
             onPaymentStarted={(e) => console.log("Payment started", e)}
-            onPaymentCompleted={(e) => console.log("Payment completed", e)}
+            onPaymentCompleted={(e) => {console.log("Payment completed", e); onSuccess(); } }
             closeOnSuccess
           >
-            <Button
-              className="w-full"
-              size="lg"
-            >
-              Support hellno.eth
-            </Button>
+            {({ show: showDaimoModal }) => (
+              <Button
+                className="w-full"
+                size="lg"
+              >
+                Support hellno.eth
+              </Button>
+             )}
           </DaimoPayButton.Custom>
         </div>
       </div>
