@@ -23,6 +23,22 @@ export default function MiniApp() {
       <span className="absolute bottom-4 right-6 animate-pulse text-2xl">🌌</span>
       <span className="absolute bottom-8 left-8 animate-spin text-2xl">💜</span>
       <h1 className="text-3xl font-extrabold">Help Hellno travel from Europoor to NYC ✈️</h1>
+      <div className="space-y-4 text-left mt-4">
+        <h2 className="text-xl font-semibold">Sponsorship Options</h2>
+        <ul className="list-disc list-inside space-y-1">
+          <li><span className="font-semibold">$1:</span> Eternal gratitude</li>
+          <li><span className="font-semibold">$20:</span> Hugs</li>
+          <li><span className="font-semibold">$30:</span> vibes.engineering early access</li>
+          <li><span className="font-semibold">$69:</span> I will build a miniapp for you using vibes</li>
+          <li><span className="font-semibold">$100:</span> Premium emoji support</li>
+          <li><span className="font-semibold">$250:</span> Exclusive digital postcard</li>
+          <li><span className="font-semibold">$420:</span> Yes we can</li>
+          <li><span className="font-semibold">$500:</span> I will print a t-shirt with your logo / brand / memecoin and wear it for one day</li>
+          <li><span className="font-semibold">$750:</span> Sponsor shoutout</li>
+          <li><span className="font-semibold">$2000:</span> Brand ambassador for a week</li>
+        </ul>
+        <p className="mt-2 font-semibold">Total fundraising goal: $2000</p>
+      </div>
       <input
         type="number"
         min="0"
