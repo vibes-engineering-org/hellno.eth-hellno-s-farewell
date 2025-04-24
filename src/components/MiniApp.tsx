@@ -1,27 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { useFrameSDK } from "../hooks/useFrameSDK";
+import { useState, useEffect, useMemo } from "react";
+import { useFrameSDK } from "~/hooks/useFrameSDK";
 import { DaimoPayButton } from "@daimo/pay";
 import { baseUSDC } from "@daimo/contract";
 import { getAddress } from "viem";
-import { useAccount, useReadContract } from "wagmi";
-import { Progress } from "./ui/progress";
-import { Button } from "./ui/button";
+import { useAccount } from "wagmi";
+import { Progress } from "~/components/ui/progress";
+import { Button } from "~/components/ui/button";
 import { PROJECT_TITLE } from "~/lib/constants";
 import { Share } from "lucide-react";
-import { useMemo } from "react";
 
 type ShareButtonProps = {
   projectName?: string;
   frontendUrl?: string;
-  variant?: "primary" | "secondary" | "ghost" | "default";
+  variant?: "default" | "secondary" | "ghost";
 };
 
 function ShareButton({
   projectName,
   frontendUrl,
-  variant = "primary",
+  variant = "default",
 }: ShareButtonProps) {
   const { sdk } = useFrameSDK();
 
@@ -53,7 +52,7 @@ function ShareButton({
 
   return (
     <Button
-      variant="default"
+      variant={variant}
       onClick={(e) => onShare(e)}
       size="lg"
       className="shadow-none"
@@ -71,22 +70,48 @@ export default function MiniApp() {
   const { isSDKLoaded } = useFrameSDK();
   const [amount, setAmount] = useState("42.069");
   const { address } = useAccount();
-  const { data, status, isSuccess, error } = useReadContract({
-    address: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
-    abi: [
-      {
-        name: "balanceOf",
-        type: "function",
-        stateMutability: "view",
-        inputs: [{ type: "address", name: "owner" }],
-        outputs: [{ type: "uint256", name: "" }],
-      },
-    ] as const,
-    functionName: "balanceOf",
-    args: [toAddress!],
-  });
-  console.log('data', data, 'status', status, 'error', error);
-  const balance = isSuccess ? Number(data) / 1e6 : 0;
+  const [balance, setBalance] = useState<number>(0);
+  const [isLoadingBalance, setIsLoadingBalance] = useState<boolean>(true);
+  const [balanceError, setBalanceError] = useState<string>("");
+
+  useEffect(() => {
+    async function fetchBalance() {
+      try {
+        const key = process.env.NEXT_PUBLIC_ALCHEMY_KEY;
+        if (!key) throw new Error("Alchemy key not configured");
+        const url = `https://base-mainnet.g.alchemy.com/v2/${key}`;
+        const payload = {
+          id: 1,
+          jsonrpc: "2.0",
+          method: "alchemy_getTokenBalances",
+          params: [toAddress],
+        };
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        const tokenBalances = data.result.tokenBalances;
+        const usdcBalanceObj = tokenBalances.find(
+          (tb: any) => tb.contractAddress.toLowerCase() === baseUSDC.token.toLowerCase()
+        );
+        if (usdcBalanceObj) {
+          const bi = BigInt(usdcBalanceObj.tokenBalance);
+          const humanBalance = Number(bi) / 10 ** 6;
+          setBalance(humanBalance);
+        } else {
+          setBalance(0);
+        }
+      } catch (err: any) {
+        console.error("Error fetching balance:", err);
+        setBalanceError(err.message);
+      } finally {
+        setIsLoadingBalance(false);
+      }
+    }
+    fetchBalance();
+  }, []);
   const progress = Math.min((balance / 2000) * 100, 100);
 
   const [completed, setCompleted] = useState(false);
@@ -206,7 +231,7 @@ export default function MiniApp() {
                   isCurrent
                     ? "bg-pink-500 text-white font-bold"
                     : unlocked
-                    ? "text-white"
+                    ? "bg-white/10 text-white"
                     : "text-gray-400 opacity-50"
                 }`}
               >
