@@ -274,8 +274,9 @@ export default function MiniApp() {
         </div>
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-2">Supported by</h2>
-          <div className="flex overflow-x-auto space-x-4 pb-2">
-            {supportedBy.map((user, idx) => (
+          <div className="relative w-full overflow-hidden">
+            <div className="flex space-x-4 animate-scroll">
+            {[...supportedBy, ...supportedBy].map((user, idx) => (
               <div key={idx} className="flex-shrink-0 flex flex-col items-center">
                 <img
                   src={user.pfpUrl}
@@ -316,6 +317,7 @@ export default function MiniApp() {
           <p className="mt-2 font-semibold">Total fundraising goal: $2000</p>
         </div>
       </div>
+    </div>
       <style jsx>{`
         @keyframes moveLR {
           0% {
@@ -324,6 +326,17 @@ export default function MiniApp() {
           100% {
             transform: translateX(110%);
           }
+        }
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-scroll {
+          animation: scroll 30s linear infinite;
         }
       `}</style>
     </>
