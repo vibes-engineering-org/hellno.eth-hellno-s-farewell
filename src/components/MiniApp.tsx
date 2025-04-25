@@ -266,8 +266,8 @@ export default function MiniApp() {
                       isCurrent
                         ? "bg-pink-500 text-white font-bold"
                         : unlocked
-                          ? "bg-white/10 text-white"
-                          : "text-gray-400 opacity-50"
+                          ? "bg-white text-black"
+                          : "text-white opacity-50"
                     }`}
                   >
                     <span className="font-semibold">${option.amount}:</span>
