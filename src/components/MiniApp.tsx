@@ -159,6 +159,11 @@ export default function MiniApp() {
     (acc, opt, idx) => (amtNum >= opt.amount ? idx : acc),
     -1,
   );
+  const supportedBy = Array(5).fill({
+    username: "biji",
+    pfpUrl:
+      "https://wrpcd.net/cdn-cgi/image/anim=false,fit=contain,f=auto,w=288/https%3A%2F%2Fi.imgur.com%2Fzwxa0tc.jpg",
+  });
 
   return (
     <>
@@ -257,6 +262,23 @@ export default function MiniApp() {
                 </Button>
               )}
             </DaimoPayButton.Custom>
+          </div>
+        </div>
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold mb-2">Supported by</h2>
+          <div className="flex overflow-x-auto space-x-4 pb-2">
+            {supportedBy.map((user, idx) => (
+              <div key={idx} className="flex-shrink-0 flex flex-col items-center">
+                <img
+                  src={user.pfpUrl}
+                  alt={user.username}
+                  className="w-12 h-12 rounded-full"
+                />
+                <span className="mt-1 text-sm text-white">
+                  {user.username}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
         <div className="space-y-4 text-left mt-4">
