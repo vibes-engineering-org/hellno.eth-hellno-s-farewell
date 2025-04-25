@@ -52,7 +52,7 @@ Please refer to Satori’s documentation for a list of supported HTML and CSS fe
 */
   const res = new ImageResponse(
     (
-      <div tw="h-full w-full p-16 flex flex-col justify-between">
+      <div tw="h-full w-full p-16 flex flex-col justify-between bg-zinc-200">
         <div tw="space-y-4 flex flex-col">
           <h1 tw="text-8xl font-bold">{PROJECT_TITLE}</h1>
         </div>
@@ -75,7 +75,7 @@ Please refer to Satori’s documentation for a list of supported HTML and CSS fe
         <div tw="w-full flex flex-col">
           <div tw="flex justify-between items-center w-full">
             <p tw="text-5xl font-bold">{`${progress.toFixed(1)}% Funded`}</p>
-            <p tw="text-5xl font-bold">{`$${balance.toFixed(3)} of $2,000`}</p>
+            <p tw="text-5xl font-bold">{`$${balance.toFixed(2)} of $2,000`}</p>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@ Please refer to Satori’s documentation for a list of supported HTML and CSS fe
   );
   res.headers.set(
     "Cache-Control",
-    "public, immutable, no-transform, s-maxage=300, max-age=300",
+    "public, immutable, no-transform, max-age=300",
   );
   return res;
 }
