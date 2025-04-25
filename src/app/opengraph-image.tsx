@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 import { PROJECT_TITLE, PROJECT_DESCRIPTION } from "~/lib/constants";
+import { fetchUSDCBalance } from "~/lib/getBalance";
+import { supportedBy } from "~/app/constants";
 
 export const alt = PROJECT_TITLE;
 export const contentType = "image/png";
@@ -13,8 +15,8 @@ async function initializeFonts() {
 
   try {
     imageOptions = {
-      width: 1200,
-      height: 800,
+      width: 960,
+      height: 640,
     };
 
     return imageOptions;
@@ -25,10 +27,17 @@ async function initializeFonts() {
 
 export default async function Image() {
   const options = await initializeFonts();
+  const balance = await fetchUSDCBalance(
+    "0x6210177c80FF902dbb58D1fDC3b47281AA4f2Ab9",
+  );
+  const progress = Math.min((balance / 2000) * 100, 100);
 
   const BACKGROUND_GRADIENT_START = "#c026d3";
   const BACKGROUND_GRADIENT_END = "#342942";
   const BACKGROUND_GRADIENT_STYLE = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
     backgroundImage: `linear-gradient(to bottom, ${BACKGROUND_GRADIENT_START}, ${BACKGROUND_GRADIENT_END})`,
     color: "white",
   };
@@ -41,16 +50,41 @@ For example, the <input> HTML element, the cursor CSS property are not in consid
 Also, Satori does not guarantee that the SVG will 100% match the browser-rendered HTML output since Satori implements its own layout engine based on the SVG 1.1 spec.
 Please refer to Satori’s documentation for a list of supported HTML and CSS features. https://github.com/vercel/satori#css
 */
-  return new ImageResponse(
+  const res = new ImageResponse(
     (
-      <div
-        tw="h-full w-full flex flex-col justify-center items-center relative"
-        style={BACKGROUND_GRADIENT_STYLE}
-      >
-        <h1 tw="text-9xl text-center font-semibold">{PROJECT_TITLE}</h1>
-        <h3 tw="text-6xl text-center font-normal">{PROJECT_DESCRIPTION}</h3>
+      <div tw="h-full w-full p-16 flex flex-col justify-between">
+        <div tw="space-y-4 flex flex-col">
+          <h1 tw="text-8xl font-bold">{PROJECT_TITLE}</h1>
+        </div>
+        {/* Supporters */}
+        <div tw="flex flex-row flex-wrap justify-center">
+          {supportedBy.map((user) => (
+            <div
+              key={user.username}
+              tw="mr-5 mb-4 flex items-center bg-[#472A91] bg-opacity-50 rounded-full px-3 py-2"
+            >
+              <img
+                src={user.pfpUrl}
+                alt={user.username}
+                tw="w-12 h-12 rounded-full m-2"
+              />
+              <span tw="text-2xl text-white">{user.username}</span>
+            </div>
+          ))}
+        </div>
+        <div tw="w-full flex flex-col">
+          <div tw="flex justify-between items-center w-full">
+            <p tw="text-5xl font-bold">{`${progress.toFixed(1)}% Funded`}</p>
+            <p tw="text-5xl font-bold">{`$${balance.toFixed(3)} of $2,000`}</p>
+          </div>
+        </div>
       </div>
     ),
     options,
   );
+  res.headers.set(
+    "Cache-Control",
+    "public, immutable, no-transform, s-maxage=300, max-age=300",
+  );
+  return res;
 }

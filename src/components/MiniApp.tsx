@@ -10,6 +10,8 @@ import { Progress } from "~/components/ui/progress";
 import { Button } from "~/components/ui/button";
 import { PROJECT_TITLE } from "~/lib/constants";
 import { Share } from "lucide-react";
+import { fetchUSDCBalance } from "~/lib/getBalance";
+import { supportedBy } from "~/app/constants";
 
 type ShareButtonProps = {
   projectName?: string;
@@ -74,43 +76,14 @@ export default function MiniApp() {
   const [balanceError, setBalanceError] = useState<string>("");
 
   useEffect(() => {
-    async function fetchBalance() {
-      try {
-        const key = process.env.NEXT_PUBLIC_ALCHEMY_KEY;
-        if (!key) throw new Error("Alchemy key not configured");
-        const url = `https://base-mainnet.g.alchemy.com/v2/${key}`;
-        const payload = {
-          id: 1,
-          jsonrpc: "2.0",
-          method: "alchemy_getTokenBalances",
-          params: [toAddress],
-        };
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await response.json();
-        const tokenBalances = data.result.tokenBalances;
-        const usdcBalanceObj = tokenBalances.find(
-          (tb: any) =>
-            tb.contractAddress.toLowerCase() === baseUSDC.token.toLowerCase(),
-        );
-        if (usdcBalanceObj) {
-          const bi = BigInt(usdcBalanceObj.tokenBalance);
-          const humanBalance = Number(bi) / 10 ** 6;
-          setBalance(humanBalance);
-        } else {
-          setBalance(0);
-        }
-      } catch (err: any) {
+    setIsLoadingBalance(true);
+    fetchUSDCBalance(toAddress)
+      .then((b) => setBalance(b))
+      .catch((err) => {
         console.error("Error fetching balance:", err);
         setBalanceError(err.message);
-      } finally {
-        setIsLoadingBalance(false);
-      }
-    }
-    fetchBalance();
+      })
+      .finally(() => setIsLoadingBalance(false));
   }, []);
   const progress = Math.min((balance / 2000) * 100, 100);
 
@@ -159,20 +132,6 @@ export default function MiniApp() {
     (acc, opt, idx) => (amtNum >= opt.amount ? idx : acc),
     -1,
   );
-  const supportedBy = [{
-    username: "biji",
-    pfpUrl:
-      "https://wrpcd.net/cdn-cgi/image/anim=false,fit=contain,f=auto,w=288/https%3A%2F%2Fi.imgur.com%2Fzwxa0tc.jpg"
-  },
-   {username: "samuellhuber", pfpUrl: "https://wrpcd.net/cdn-cgi/image/anim=false,fit=contain,f=auto,w=336/https%3A%2F%2Fi.imgur.com%2FOHMozjv.jpg" },
-   {username: "jamco", pfpUrl: "https://wrpcd.net/cdn-cgi/image/anim=false,fit=contain,f=auto,w=288/https%3A%2F%2Fi.imgur.com%2FBupKd3h.jpg"},
-   {username: "timdaub", pfpUrl: "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/1cfcb87c-e5d3-4cc4-e0a5-d02d38409b00/anim=false,fit=contain,f=auto,w=336"},
-   {username: "nt", pfpUrl: "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/48fcaae2-ad08-4d24-4317-2094d979b800/anim=false,fit=contain,f=auto,w=336"},
-   {username: "harris-", pfpUrl: "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/ea8cac53-6cbf-429e-3be6-d5923cf59200/anim=false,fit=contain,f=auto,w=336"},
-   {username: "stephancill", pfpUrl: "https://wrpcd.net/cdn-cgi/image/anim=false,fit=contain,f=auto,w=336/https%3A%2F%2Fimages.colorino.site%2F19c754968a5a0d6e5b554a3aa8107d5fe973a88550080f7b1713e3c33989ffa0.png"},
-   {username: "kompreni", pfpUrl: "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/2b7cdbbc-92fe-4d37-450a-fdbb88e7e100/anim=false,fit=contain,f=auto,w=336"}
-  ];
-
   return (
     <>
       <div className="relative w-[400px] mx-auto py-6 px-6 text-left bg-gradient-to-br from-purple-800 via-purple-500 to-pink-400 text-white rounded-xl shadow-lg overflow-hidden">
@@ -276,48 +235,51 @@ export default function MiniApp() {
           <h2 className="text-xl font-semibold mb-2">Supported by</h2>
           <div className="relative w-full overflow-hidden">
             <div className="flex space-x-4 animate-scroll">
-            {[...supportedBy, ...supportedBy].map((user, idx) => (
-              <div key={idx} className="flex-shrink-0 flex flex-col items-center">
-                <img
-                  src={user.pfpUrl}
-                  alt={user.username}
-                  className="w-12 h-12 rounded-full"
-                />
-                <span className="mt-1 text-sm text-white">
-                  {user.username}
-                </span>
-              </div>
-            ))}
+              {supportedBy.map((user, idx) => (
+                <div
+                  key={idx}
+                  className="flex-shrink-0 flex flex-col items-center"
+                >
+                  <img
+                    src={user.pfpUrl}
+                    alt={user.username}
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <span className="mt-1 text-sm text-white">
+                    {user.username}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="space-y-4 text-left mt-4">
+            <h2 className="text-xl font-semibold">Sponsorship Options</h2>
+            <ul className="text-left list-none space-y-1">
+              {sponsorshipOptions.map((option, idx) => {
+                const unlocked = idx <= currentIndex;
+                const isCurrent = idx === currentIndex;
+                return (
+                  <li
+                    key={option.amount}
+                    onClick={() => setAmount(option.amount.toFixed(2))}
+                    className={`cursor-pointer flex text-left px-4 py-2 rounded transition-colors ${
+                      isCurrent
+                        ? "bg-pink-500 text-white font-bold"
+                        : unlocked
+                          ? "bg-white/10 text-white"
+                          : "text-gray-400 opacity-50"
+                    }`}
+                  >
+                    <span className="font-semibold">${option.amount}:</span>
+                    <span>{option.label}</span>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-2 font-semibold">Total fundraising goal: $2000</p>
           </div>
         </div>
-        <div className="space-y-4 text-left mt-4">
-          <h2 className="text-xl font-semibold">Sponsorship Options</h2>
-          <ul className="text-left list-none space-y-1">
-            {sponsorshipOptions.map((option, idx) => {
-              const unlocked = idx <= currentIndex;
-              const isCurrent = idx === currentIndex;
-              return (
-                <li
-                  key={option.amount}
-                  onClick={() => setAmount(option.amount.toFixed(2))}
-                  className={`cursor-pointer flex text-left px-4 py-2 rounded transition-colors ${
-                    isCurrent
-                      ? "bg-pink-500 text-white font-bold"
-                      : unlocked
-                        ? "bg-white/10 text-white"
-                        : "text-gray-400 opacity-50"
-                  }`}
-                >
-                  <span className="font-semibold">${option.amount}:</span>
-                  <span>{option.label}</span>
-                </li>
-              );
-            })}
-          </ul>
-          <p className="mt-2 font-semibold">Total fundraising goal: $2000</p>
-        </div>
       </div>
-    </div>
       <style jsx>{`
         @keyframes moveLR {
           0% {
