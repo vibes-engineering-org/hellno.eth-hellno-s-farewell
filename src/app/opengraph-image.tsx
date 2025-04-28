@@ -52,7 +52,7 @@ Please refer to Satori’s documentation for a list of supported HTML and CSS fe
 */
   const res = new ImageResponse(
     (
-      <div tw="h-full w-full p-16 flex flex-col justify-between bg-zinc-200">
+      <div tw="h-full w-full p-12 flex flex-col justify-between bg-zinc-200">
         <div tw="space-y-4 flex flex-col">
           <h1 tw="text-8xl font-bold">{PROJECT_TITLE}</h1>
         </div>
