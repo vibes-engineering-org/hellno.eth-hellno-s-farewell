@@ -12,8 +12,8 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0
       '@daimo/pay':
-        specifier: ^1.6.5
-        version: 1.6.5(@babel/core@7.26.10)(@emotion/is-prop-valid@1.3.1)(@tanstack/react-query@5.67.3(react@18.3.1))(bs58@6.0.0)(bufferutil@4.0.9)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(tslib@2.8.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))(wagmi@2.14.13(@react-native-async-storage/async-storage@1.24.0(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)))(@tanstack/query-core@5.67.3)(@tanstack/react-query@5.67.3(react@18.3.1))(@types/react@18.3.18)(@upstash/redis@1.34.5)(bufferutil@4.0.9)(encoding@0.1.13)(react@18.3.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))(zod@3.24.2))
+        specifier: ^1.7.4
+        version: 1.7.4(@babel/core@7.26.10)(@emotion/is-prop-valid@1.3.1)(@tanstack/react-query@5.67.3(react@18.3.1))(bs58@6.0.0)(bufferutil@4.0.9)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(tslib@2.8.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))(wagmi@2.14.13(@react-native-async-storage/async-storage@1.24.0(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)))(@tanstack/query-core@5.67.3)(@tanstack/react-query@5.67.3(react@18.3.1))(@types/react@18.3.18)(@upstash/redis@1.34.5)(bufferutil@4.0.9)(encoding@0.1.13)(react@18.3.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))(zod@3.24.2))
       '@farcaster/auth-client':
         specifier: ^0.3.0
         version: 0.3.0(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))
@@ -429,11 +429,11 @@ packages:
   '@daimo/contract@1.6.0':
     resolution: {integrity: sha512-Rdrav/NZ06aTQXC6j/AZ0nxxQbyNrI2zqiF+jydU9T0BCluwK7TbDUMBnxeaEzuPoS4vaPmlbLkC41qbwA9zzw==}
 
-  '@daimo/pay-common@1.6.5':
-    resolution: {integrity: sha512-0wqyBFk/953ggDtlhc+AObEsxBrSjTI+q29RDENsjrQFx4vQgGxJRu0d55XOj5b+uBM+VbEYz057JMYKmQpd5Q==}
+  '@daimo/pay-common@1.7.4':
+    resolution: {integrity: sha512-repmwUDWv3DjqpFwMTwLbeQWRlQScNPngG50nJAwnGAPS4KMLHdrUIWNOBiFP7bLr4tqirbjeggE02JoPrpAkg==}
 
-  '@daimo/pay@1.6.5':
-    resolution: {integrity: sha512-s0yn4AWIEpXg6fsk/uDP8RCwmJnU3z0HzxTGz0Xw4i38p0E14NMzNaT1sl01znhC5ut1LAzIA4l7rg+06az5gA==}
+  '@daimo/pay@1.7.4':
+    resolution: {integrity: sha512-t7yJj2GKPlUBsts7MIEt63vbHq5bApgJKHGrufRMglIBDRJ5mGGSfrsS7ZXRTjVhkDfQ8zEEgn/XB2TWRo2KCQ==}
     engines: {node: '>=12.4'}
     peerDependencies:
       '@tanstack/react-query': '>=5.0.0'
@@ -6182,7 +6182,7 @@ snapshots:
 
   '@daimo/contract@1.6.0': {}
 
-  '@daimo/pay-common@1.6.5(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)':
+  '@daimo/pay-common@1.7.4(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@scure/base': 1.2.4
       viem: 2.27.0(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2)
@@ -6192,9 +6192,9 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@daimo/pay@1.6.5(@babel/core@7.26.10)(@emotion/is-prop-valid@1.3.1)(@tanstack/react-query@5.67.3(react@18.3.1))(bs58@6.0.0)(bufferutil@4.0.9)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(tslib@2.8.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))(wagmi@2.14.13(@react-native-async-storage/async-storage@1.24.0(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)))(@tanstack/query-core@5.67.3)(@tanstack/react-query@5.67.3(react@18.3.1))(@types/react@18.3.18)(@upstash/redis@1.34.5)(bufferutil@4.0.9)(encoding@0.1.13)(react@18.3.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))(zod@3.24.2))':
+  '@daimo/pay@1.7.4(@babel/core@7.26.10)(@emotion/is-prop-valid@1.3.1)(@tanstack/react-query@5.67.3(react@18.3.1))(bs58@6.0.0)(bufferutil@4.0.9)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(tslib@2.8.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))(wagmi@2.14.13(@react-native-async-storage/async-storage@1.24.0(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)))(@tanstack/query-core@5.67.3)(@tanstack/react-query@5.67.3(react@18.3.1))(@types/react@18.3.18)(@upstash/redis@1.34.5)(bufferutil@4.0.9)(encoding@0.1.13)(react@18.3.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(viem@2.23.9(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)(zod@3.24.2))(zod@3.24.2))':
     dependencies:
-      '@daimo/pay-common': 1.6.5(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)
+      '@daimo/pay-common': 1.7.4(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)
       '@rollup/plugin-typescript': 12.1.2(tslib@2.8.1)(typescript@5.8.2)
       '@solana/wallet-adapter-base': 0.9.24(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-react': 0.15.36(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bs58@6.0.0)(react-native@0.79.1(@babel/core@7.26.10)(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)
